@@ -30,8 +30,7 @@ void drawrect (int x0, int y0, int width, int height, int color)
 }
 
 
-int
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 	const char *devfile = "/dev/fb0";
 	long int screensize = 0;
@@ -42,7 +41,6 @@ main (int argc, char **argv)
 		perror ("Error: cannot open framebuffer device");
 		exit (1);
 	}
-
 	if (ioctl (fbFd, FBIOGET_FSCREENINFO, &finfo) < 0)
 	{
 		perror ("Error while reading fixed information");
@@ -53,7 +51,6 @@ main (int argc, char **argv)
 		perror ("Error while reading variable information");
 		exit (3);
 	}
-	
 	screensize = finfo.smem_len;
 
 	frameBuffer = (char *) mmap (0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED,fbFd, 0);
@@ -67,7 +64,6 @@ main (int argc, char **argv)
 	drawrect (vinfo.xres * 2 / 8, vinfo.yres     / 8, vinfo.xres / 8, vinfo.yres / 8, 0xff00ff00);
 	drawrect (vinfo.xres * 3 / 8, vinfo.yres     / 8, vinfo.xres / 8, vinfo.yres / 8, 0xff0000ff);
 
-
 	drawrect (vinfo.xres     / 8, vinfo.yres * 2 / 8, vinfo.xres / 8, vinfo.yres / 8, 0xff00ff00);
 	drawrect (vinfo.xres * 2 / 8, vinfo.yres * 2 / 8, vinfo.xres / 8, vinfo.yres / 8, 0xff0000ff);
 	drawrect (vinfo.xres * 3 / 8, vinfo.yres * 2 / 8, vinfo.xres / 8, vinfo.yres / 8, 0xffff0000);
@@ -77,7 +73,6 @@ main (int argc, char **argv)
 	drawrect (vinfo.xres * 3 / 8, vinfo.yres * 3 / 8, vinfo.xres / 8, vinfo.yres / 8, 0xff00ff00);
 
 	munmap (frameBuffer, screensize);
-
 	close (fbFd);
 	return 0;
 }
